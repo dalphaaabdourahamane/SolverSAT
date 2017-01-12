@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="projetjavaalphasandratra" default="all">
+  
+  
+  <property file="projetjavaalphasandratra.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.ear"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module JavaProjet -->
+  
+  <dirname property="module.javaprojet.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.javaprojet" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.javaprojet" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.javaprojet" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.javaprojet" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="javaprojet.output.dir" value="${module.javaprojet.basedir}/out/production/JavaProjet"/>
+  <property name="javaprojet.testoutput.dir" value="${module.javaprojet.basedir}/out/test/JavaProjet"/>
+  
+  <path id="javaprojet.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="javaprojet.module.production.classpath">
+    <path refid="${module.jdk.classpath.javaprojet}"/>
+  </path>
+  
+  <path id="javaprojet.runtime.production.module.classpath">
+    <pathelement location="${javaprojet.output.dir}"/>
+  </path>
+  
+  <path id="javaprojet.module.classpath">
+    <path refid="${module.jdk.classpath.javaprojet}"/>
+    <pathelement location="${javaprojet.output.dir}"/>
+  </path>
+  
+  <path id="javaprojet.runtime.module.classpath">
+    <pathelement location="${javaprojet.testoutput.dir}"/>
+    <pathelement location="${javaprojet.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.javaprojet">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.javaprojet">
+    <patternset refid="excluded.from.module.javaprojet"/>
+  </patternset>
+  
+  <path id="javaprojet.module.sourcepath">
+    <dirset dir="${module.javaprojet.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.javaprojet" depends="compile.module.javaprojet.production,compile.module.javaprojet.tests" description="Compile module JavaProjet"/>
+  
+  <target name="compile.module.javaprojet.production" description="Compile module JavaProjet; production classes">
+    <mkdir dir="${javaprojet.output.dir}"/>
+    <javac destdir="${javaprojet.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.javaprojet}/javac">
+      <compilerarg line="${compiler.args.javaprojet}"/>
+      <bootclasspath refid="javaprojet.module.bootclasspath"/>
+      <classpath refid="javaprojet.module.production.classpath"/>
+      <src refid="javaprojet.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.javaprojet"/>
+    </javac>
+    
+    <copy todir="${javaprojet.output.dir}">
+      <fileset dir="${module.javaprojet.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.javaprojet.tests" depends="compile.module.javaprojet.production" description="compile module JavaProjet; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.javaprojet" description="cleanup module">
+    <delete dir="${javaprojet.output.dir}"/>
+    <delete dir="${javaprojet.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.javaprojet" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.javaprojet" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.carotte" value="${basedir}/out/artifacts/Carotte"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.Carotte.jar" value="${artifacts.temp.dir}/Carotte.jar"/>
+  </target>
+  
+  <target name="artifact.carotte" depends="init.artifacts" description="Build &#39;Carotte&#39; artifact">
+    <property name="artifact.temp.output.carotte" value="${artifacts.temp.dir}/Carotte"/>
+    <mkdir dir="${artifact.temp.output.carotte}"/>
+    <jar destfile="${temp.jar.path.Carotte.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${basedir}/src/sandIOmega"/>
+      <zipfileset file="${basedir}/src/META-INF/MANIFEST.MF" prefix="META-INF"/>
+    </jar>
+    <copy file="${temp.jar.path.Carotte.jar}" tofile="${artifact.temp.output.carotte}/Carotte.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.carotte" description="Build all artifacts">
+    <mkdir dir="${artifact.output.carotte}"/>
+    <copy todir="${artifact.output.carotte}">
+      <fileset dir="${artifact.temp.output.carotte}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

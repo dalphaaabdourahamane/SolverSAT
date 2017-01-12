@@ -1,0 +1,17 @@
+c 2-queen problem
+c By Forrest Sheng Bao http://fsbao.net
+c This software is a free software under GNU General Public License
+c assume number means grid
+c true means a queen in this grid
+c false means not queen in this grid
+c each line must has one queen
+c no two queens attach each other
+c so they can't be true at the same time
+p cnf 4
+1 2 0
+3 4 0
+-1 -2 0
+-3 -4 0
+-1 -3 0
+-2 -4 0
+-1 -4 0
